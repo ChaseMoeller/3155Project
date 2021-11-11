@@ -1,53 +1,40 @@
-<!-- Page: Home Page / Index -->
-<!-- Author: Chase Moeller -->
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>New Post</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="DefaultStyle.css" rel="stylesheet">
-</head>
-<body>
-
-<div class="header">
-    <h1>New Post</h1>
-</div>
-
-<!-- Navigation Bar -->
-<div class="navbar">
-    <a href="Index.html">Home</a>
-    <a href="viewPost.html">View Posts</a>
-</div>
-
-
-{% if post %}
-<form action="{{ url_for('update_post', post_id=post.id ) }}" method="post">
-    {% else %}
-    <form action="new" method="post">
-        {% endif %}
-        <p><label>Title </label></p>
-        <p><input type="text" name="title" value="{% if post %}{{post.title}} {% endif %}"/></p>
-        <p><label>Post </label></p>
-        <p>
-            <textarea name="postText" rows="6" cols="0">
-
-                {% if post %}
-                    {{post.text}}
-                {% else %}
-                    Add your new post here ...
-                {% endif %}
-
-            </textarea>
-        </p>
-        <p>
-
-            <input type="submit" value="Add Post"/>
-
-        </p>
-    </form>
-
-
-    <div class="main">
-    </div>
+   <head>
+       <style>
+         .header {
+  border: 5px outset red;
+  background-color: lightblue;
+  text-align: center;
+}
+        </style>
+      <title>View Post</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title> StackUnderflow ViewPost Page </title>
+      <link href="DefaultStyle.css" rel="stylesheet">
+   </head>
+   <body>
+        <!-- Navigation Bar -->
+      <div class="navbar">
+         <a href="Index.html">Home</a>
+         <a href="newPost.html">New Post</a>
+         <a href="viewPost.html">Posts</a>
+      </div>
+      <div class="header">
+         <h1>View Post</h1>
+      </div>
+      <table>
+            <tr>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.text }}</td>
+                <td>{{ post.date }}</td>
+            </tr>
+        </table>
+      <div class="main">
+       </div>
