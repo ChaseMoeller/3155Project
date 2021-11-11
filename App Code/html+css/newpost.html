@@ -4,23 +4,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>New Post</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="DefaultStyle.css" rel="stylesheet">
+    <title>New Post</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="DefaultStyle.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="header">
-<h1>New Post</h1>
+    <h1>New Post</h1>
 </div>
 
 <!-- Navigation Bar -->
 <div class="navbar">
-<a href="Index.html">Home</a>
-<a href="newPost.html">New Posts</a>
-<a href="viewPost.html">View Posts</a>
+    <a href="Index.html">Home</a>
+    <a href="viewPost.html">View Posts</a>
 </div>
 
-<div class="main">
-</div>
+
+{% if post %}
+<form action="{{ url_for('update_post', post_id=post.id ) }}" method="post">
+    {% else %}
+    <form action="new" method="post">
+        {% endif %}
+        <p><label>Title </label></p>
+        <p><input type="text" name="title" value="{% if post %}{{post.title}} {% endif %}"/></p>
+        <p><label>Post </label></p>
+        <p>
+            <textarea name="postText" rows="6" cols="0">
+
+                {% if post %}
+                    {{post.text}}
+                {% else %}
+                    Add your new post here ...
+                {% endif %}
+
+            </textarea>
+        </p>
+        <p>
+
+            <input type="submit" value="Add Post"/>
+
+        </p>
+    </form>
+
+
+    <div class="main">
+    </div>
