@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="UNCC posts App">
+        <title>UNCC posts App</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+
+	<nav>
+		<a href="{{ url_for('index') }}"> Home</a> ||
+		<a href="{{ url_for('get_posts') }}">View Posts</a> ||
+		<a href="{{ url_for('new_post') }}"> Add post</a>
+	</nav>
+
+    <body>
+
+        <h1>Welcome {{user.name}} to StackUnderflow</h1>
+
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="UNCC Notes App">
+        <title>StacUnderFlow - View Post</title>
+        <!-- styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    </head>
+	
+<nav>
+	<a href="{{ url_for('index') }}"> Home</a> ||
+	<a href="{{ url_for('get_posts') }}">View Posts</a> ||
+	<a href="{{ url_for('new_post') }}"> Add post</a>
+</nav>
+	
+    <body>
+		<h1>Welcome {{user.name}} to StackUnderflow <h1>
+        <h1>Post details</h1>
+
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Date</th>
+            </tr>
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.text }}</td>
+                <td>{{ post.date }}</td>
+            </tr>
+        </table>
+    </body>
+</html>
