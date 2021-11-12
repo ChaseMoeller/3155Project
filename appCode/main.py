@@ -33,7 +33,7 @@ def get_posts():
 @app.route('/posts/<post_id>')
 def get_post(post_id):
     a_user = db.session.query(User).filter_by(email='placeholder@temp.com').first()
-    my_post = db.session.query(Post).filter_by(id=post_id).one()
+    my_post = db.session.query(Post).filter_by(id=post_id).first()
 
     return render_template('post.html', post=my_post, user=a_user)
 
