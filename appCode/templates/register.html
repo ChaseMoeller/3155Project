@@ -32,7 +32,7 @@
         <h2>Use this site to maintain and organize your notes.</h2>
         <div class="formwrapper">
             <h2 class="title">Register</h2>
-            <form method="NOTE" action="/register">
+            <form method="POST" action="/register">
                 <div class="form-field">{{ form.firstname.label }} {{ form.firstname }}
                     {% if form.firstname.errors %}
                     <ul class="errors">
