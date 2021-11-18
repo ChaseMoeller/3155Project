@@ -15,16 +15,7 @@
 		<a href="{{ url_for('new_post') }}"> Add post</a>
 	</nav>
 
-    {% if user %}
-        <nav>
-            <a href="{{ url_for('logout') }}" > Logout</a>
-        </nav>
-    {% else %}
-        <nav>
-            <a href="{{ url_for('login') }}" > Login</a>
-            <a href="{{ url_for('register') }}" > Register</a>
-        </nav>
-    {% endif %}
+
 
     <body>
 
