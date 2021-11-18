@@ -87,6 +87,32 @@ def delete_post(post_id):
     return redirect(url_for('get_posts'))
 
 
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    form = RegisterForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        # salt and hash password
+        h_password = bcrypt.hashpw(
+            request.form['password'].encode('utf-8'), bcrypt.gensalt())
+        # get entered user data
+        first_name = request.form['firstname']
+        last_name = request.form['lastname']
+        # create user model
+        new_user = User(first_name, last_name, request.form['email'], h_password)
+        # add user to database and commit
+        db.session.add(new_user)
+        db.session.commit()
+        # save the user's name to the session
+        session['user'] = first_name
+        session['user_id'] = new_user.id  # access id value from user model of this newly added user
+        # show user dashboard view
+        return redirect(url_for('get_posts'))
+
+    # something went wrong - display register view
+    return render_template('register.html', form=form)
+
+
 app.run(host=os.getenv('IP', '127.0.0.1'),port=int(os.getenv('PORT', 5000)),debug=True)
 
 # To see the web page in your web browser, go to the url,
