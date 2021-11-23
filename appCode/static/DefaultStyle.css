@@ -47,13 +47,6 @@ p {
 	text-align: center;
 	padding: 15px 20px;
 }
-.navbar a2 {
-	float: left;
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 15px 20px;
-}
 
 /* Navbar Color Change when Highlighted */
 .navbar a:hover {

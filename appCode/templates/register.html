@@ -3,33 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
 </head>
     <body>
-        <div class="navdiv">
-
-            <nav>
-                <a href="{{ url_for('index') }}"> Home</a> ||
-                <a href="{{ url_for('get_posts') }}"> My Posts</a> ||
-                <a href="{{ url_for('new_post') }}">Add Post</a>
-            </nav>
-
-            {% if user %}
-                <nav>
-                    <a href="{{ url_for('logout') }}" > Logout</a>
-                </nav>
-            {% else %}
-                <nav>
-                    <a href="{{ url_for('login') }}" > Login</a>
-                    <a href="{{ url_for('register') }}" > Register</a>
-                </nav>
-            {% endif %}
-
-        </div>
-        <h1>Welcome {% if user %}{{user}}{% endif %}to Stack Underflow!</h1>
-
-        <h2>Use this site to maintain and organize your notes.</h2>
+	<div class="navbar">
+		<a href="{{ url_for('index') }}"> Home</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a>
+		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
+		<a href="{{ url_for('new_post') }}"> Add Post</a>
+	{% if user %}
+		<nav>
+			<a href="{{ url_for('logout') }}">Logout</a>
+		</nav>
+	{% else %}
+		<nav>
+			<a href="{{ url_for('login') }}">Sign In</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</nav>
+	{% endif %}
+	</div>
         <div class="formwrapper">
             <h2 class="title">Register</h2>
             <form method="POST" action="/register">

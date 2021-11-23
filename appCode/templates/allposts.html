@@ -34,13 +34,7 @@
     <tr>
         <td>{{ post.title }}</td>
         <td>{{ post.date }}</td>
-        <td><a href="{{ url_for('update_post', post_id=post.id)  }}">Edit</a></td>
         <td><a href="{{ url_for('get_post', post_id=post.id)  }}">View</a></td>
-        <td>
-            <form action="{{ url_for('delete_post', post_id=post.id) }}" method="note">
-                <input type="submit" value="Delete">
-            </form>
-        </td>
     </tr>
     {% endfor %}
 </table>

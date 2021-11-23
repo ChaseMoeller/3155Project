@@ -3,22 +3,29 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="UNCC Notes App">
-        <title>StacUnderFlow - View Post</title>
-        <!-- styles -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <meta name="description" content="StackUnderflow">
+        <title>StackUnderflow - View Post</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
     </head>
 	
-<nav>
-	<a href="{{ url_for('index') }}"> Home</a> ||
-	<a href="{{ url_for('get_posts') }}">View Posts</a> ||
-	<a href="{{ url_for('new_post') }}"> Add post</a>
-</nav>
+	<div class="navbar">
+		<a href="{{ url_for('index') }}"> Home</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a>
+		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
+		<a href="{{ url_for('new_post') }}"> Add Post</a>
+	{% if user %}
+		<nav>
+			<a href="{{ url_for('logout') }}">Logout</a>
+		</nav>
+	{% else %}
+		<nav>
+			<a href="{{ url_for('login') }}">Sign In</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</nav>
+	{% endif %}
+	</div>
 	
     <body>
-		<h1>Welcome {{user.name}} to StackUnderflow <h1>
-        <h1>Post details</h1>
-
         <table>
             <tr>
                 <th>Title</th>
@@ -31,5 +38,24 @@
                 <td>{{ post.date }}</td>
             </tr>
         </table>
+        {% if post.comments %}
+            {% if post.comments|length > 0 %}
+                <h2>Comments</h2>
+                <ul>
+                {% for comment in post.comments %}
+                    <li>{{ comment.content }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endif %}
+        <form action="{{ url_for('new_comment', post_id=post.id) }}" method="post">
+            <div class="formwrapper">
+                <h2 class="title">Add a comment</h2>
+                    <div class="form-field">
+                        {{ form.comment.label }} <br/> {{ form.comment }}
+                    </div>
+                {{ form.submit }}
+            </div>
+        </form>
     </body>
 </html>

@@ -1,24 +1,31 @@
-<!-- Page: Home Page / Index -->
-<!-- Author: Chase Moeller -->
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>New Post</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="DefaultStyle.css" rel="stylesheet">
-</head>
-<body>
-
+	<head>
+		<title>New Post</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
+    </head>
+	
+	<div class="navbar">
+		<a href="{{ url_for('index') }}"> Home</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a>
+		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
+		<a href="{{ url_for('new_post') }}"> Add Post</a>
+	{% if user %}
+		<nav>
+			<a href="{{ url_for('logout') }}">Logout</a>
+		</nav>
+	{% else %}
+		<nav>
+			<a href="{{ url_for('login') }}">Sign In</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</nav>
+	{% endif %}
+	</div>
+	
 <div class="header">
     <h1>New Post</h1>
-</div>
-
-<!-- Navigation Bar -->
-<div class="navbar">
-    <a href="Index.html">Home</a>
-    <a href="viewPost.html">View Posts</a>
 </div>
 
 

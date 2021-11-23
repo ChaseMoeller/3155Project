@@ -5,14 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="StackUnderflow">
         <title>StackUnderflow</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='DefaultStyle.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
     </head>
 	
-	<nav>
-		<a href="{{ url_for('index') }}"> Home</a> ||
-		<a href="{{ url_for('get_posts') }}"> My Posts</a> ||
+	<div class="navbar">
+		<a href="{{ url_for('index') }}"> Home</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a>
+		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
 		<a href="{{ url_for('new_post') }}"> Add Post</a>
-	</nav>
 	{% if user %}
 		<nav>
 			<a href="{{ url_for('logout') }}">Logout</a>
@@ -23,6 +23,7 @@
 			<a href="{{ url_for('register') }}">Register</a>
 		</nav>
 	{% endif %}
+	</div>
 
     <body>
 

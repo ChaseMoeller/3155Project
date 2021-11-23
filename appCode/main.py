@@ -38,10 +38,15 @@ def get_posts():
     else:
         return redirect(url_for('login'))
 
+@app.route('/allposts')
+def get_allposts():
+    all_posts = db.session.query(Post).all()
+    return render_template('allposts.html', posts=all_posts, user=session['user'])
+
 @app.route('/posts/<post_id>')
 def get_post(post_id):
     if session.get('user'):
-        my_post = db.session.query(Post).filter_by(id=post_id, user_id=session['user_id']).one()
+        my_post = db.session.query(Post).filter_by(id=post_id).one()
         form = CommentForm()
         return render_template('post.html', post=my_post, user=session['user'], form=form)
     else:
