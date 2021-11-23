@@ -1,26 +1,53 @@
-<!-- Page: Home Page / Index -->
-<!-- Author: Chase Moeller -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Login</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="DefaultStyle.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
 </head>
-<body>
+    <body>
+        <div class="navdiv">
+            <nav>
+                <a href="{{ url_for('index') }}"> Home</a> ||
+                <a href="{{ url_for('get_posts') }}"> My Posts</a> ||
+                <a href="{{ url_for('new_post') }}">Add Post</a>
+            </nav>
+        </div>
+		{% if user %}
+			<nav>
+				<a href="{{ url_for('logout') }}">Logout</a>
+			</nav>
+		{% else %}
+			<nav>
+				<a href="{{ url_for('login') }}">Sign In</a>
+				<a href="{{ url_for('register') }}">Register</a>
+			</nav>
+		{% endif %}
 
-<div class="header">
-<h1>Login</h1>
-</div>
-
-<!-- Navigation Bar -->
-<div class="navbar">
-<a href="Index.html">Home</a>
-<a href="newPost.html">New Posts</a>
-<a href="viewPost.html">View Posts</a>
-</div>
-
-<div class="main">
-</div>
+        <div class="formwrapper">
+            <h2 class="title">Login</h2>
+            <form method="POST" action="/login">
+                <div class="form-field">{{ form.email.label }} {{ form.email }}
+                    {% if form.email.errors %}
+                    <ul class="errors">
+                        {% for error in form.email.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="form-field">{{ form.password.label }} {{ form.password }}
+                    {% if form.password.errors %}
+                    <ul class="errors">
+                        {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                {{ form.submit }}
+            </form>
+        </div>
+    </body>
+</html>

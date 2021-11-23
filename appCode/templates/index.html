@@ -3,23 +3,30 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="UNCC posts App">
-        <title>UNCC posts App</title>
-        <!-- styles -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <meta name="description" content="StackUnderflow">
+        <title>StackUnderflow</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='DefaultStyle.css') }}">
     </head>
-
+	
 	<nav>
 		<a href="{{ url_for('index') }}"> Home</a> ||
-		<a href="{{ url_for('get_posts') }}">View Posts</a> ||
-		<a href="{{ url_for('new_post') }}"> Add post</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a> ||
+		<a href="{{ url_for('new_post') }}"> Add Post</a>
 	</nav>
-
-
+	{% if user %}
+		<nav>
+			<a href="{{ url_for('logout') }}">Logout</a>
+		</nav>
+	{% else %}
+		<nav>
+			<a href="{{ url_for('login') }}">Sign In</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</nav>
+	{% endif %}
 
     <body>
 
-        <h1>Welcome {{user.name}} to StackUnderflow</h1>
+        <h1>Welcome {{user}} to StackUnderflow</h1>
 
     </body>
 </html>

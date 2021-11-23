@@ -1,0 +1,110 @@
+/* Body Style */
+body {
+	text-align: center
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+}
+
+/* Header Style */
+.header {
+	padding: 5px;
+	text-align: center;
+	background: #0025fa;
+	color: white;
+}
+
+/* h1 Size */
+.header h1 {
+	text-align: center
+	font-size: 50px;
+}
+
+.header h2 {
+	text-align: center
+	font-size: 50px;
+}
+
+.header h3 {
+	text-align: center
+	font-size: 50px;
+}
+
+p {
+	text-align: center
+}
+
+/* Navbar Style */
+.navbar {
+	overflow: hidden;
+	background-color: #89878a;
+}
+
+/* Navbar Link Style */
+.navbar a {
+	float: left;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 15px 20px;
+}
+.navbar a2 {
+	float: left;
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 15px 20px;
+}
+
+/* Navbar Color Change when Highlighted */
+.navbar a:hover {
+	background-color: #bcbbbd
+}
+
+/* Sends Navbar Link to the Right */
+.navbar a.right {
+	float: right;
+}
+
+/* Main Body Style */
+.main {
+	text-align: center
+	-ms-flex: 70%; /* IE10 */
+	flex: 70%;
+	background-color: white;
+	padding: 20px;
+}
+
+/* Puts images inline */
+.imgContainer {
+	display: inline-block;
+	width: 300px;
+	height: 150px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Adjusts Images */
+.imgContainer img {
+	width: 100%;
+	hight: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+ul {
+	list-style-type: none;
+}
+li {
+  float: center;
+}
+
+#gallary li {
+	padding-right: 10px;
+	display: inline;
+}
+
+#tournamentInfo {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center
+}
