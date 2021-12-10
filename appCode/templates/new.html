@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>New Post</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
+        
+        <link rel="stylesheet" type="text/css" href="DefaultStyle.css">
+    </head>
+	
+	<div class="navbar">
+		<a href="{{ url_for('index') }}"> Home</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a>
+		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
+		<a href="{{ url_for('new_post') }}"> Add Post</a>
+        
+        
+
+	{% if user %}
+		<nav>
+			<a href="{{ url_for('logout') }}">Logout</a>
+		</nav>
+	{% else %}
+		<nav>
+			<a href="{{ url_for('login') }}">Sign In</a>
+			<a href="{{ url_for('register') }}">Register</a>
+		</nav>
+        <img src="moon.png" id="icon">
+	{% endif %}
+	</div>
+	
+<div class="header">
+    <h1>New Post</h1>
+</div>
+<div class="dark">
+
+{% if post %}
+<form action="{{ url_for('update_post', post_id=post.id ) }}" method="post">
+    {% else %}
+    <form action="new" method="post">
+        {% endif %}
+        <p><label>Title </label></p>
+        <p><input type="text" name="title" value="{% if post %}{{post.title}} {% endif %}"/></p>
+        <p><label>Post </label></p>
+        <p>
+            <textarea name="postText" rows="6" cols="0">
+
+                {% if post %}
+                    {{post.text}}
+                {% else %}
+                    Add your new post here ...
+                {% endif %}
+
+            </textarea>
+        </p>
+        <p>
+
+            <input type="submit" value="Add Post"/>
+
+        </p>
+    </form>
+
+
+    <div class="main">
+     </div>   
+    </div>
+    <script>
+        var icon = document.getElementById("icon");
+        icon.onclick = function(){
+            document.body.classList.toggle("dark-theme");
+            if(document.body.classList.contains("dark-theme")){
+                icon.src = "sun.png";
+            }else{
+                icon.src = "moon.png";
+            }
+        }
+            
+    </script>
