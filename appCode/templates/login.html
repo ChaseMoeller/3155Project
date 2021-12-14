@@ -1,41 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}"> 
-        
-    <link rel="stylesheet" type="text/css" href="DefaultStyle.css">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}"> 
     </head>
 	
 	<div class="navbar">
         {% if user %}
-		<a href="{{ url_for('index') }}"> Home</a>
-		<a href="{{ url_for('get_posts') }}"> My Posts</a>
-		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
-		<a href="{{ url_for('new_post') }}"> Add Post</a>
-        {% else %}
-        <a href="{{ url_for('index') }}"> Home</a>
-		<a href="{{ url_for('get_posts') }}"> My Posts</a>
-		<a href="{{ url_for('new_post') }}"> Add Post</a>
-        {% endif %}
-        
-	{% if user %}
-		<nav>
+			<a href="{{ url_for('index') }}"> Home</a>
+			<a href="{{ url_for('get_posts') }}"> My Posts</a>
+			<a href="{{ url_for('get_allposts') }}"> All Posts</a>
+			<a href="{{ url_for('new_post') }}"> Add Post</a>
+			<a href="{{ url_for('settings') }}"> Settings</a>
 			<a href="{{ url_for('logout') }}">Logout</a>
-		</nav>
-	{% else %}
-		<nav>
+        {% else %}
+			<a href="{{ url_for('index') }}"> Home</a>
 			<a href="{{ url_for('login') }}">Sign In</a>
 			<a href="{{ url_for('register') }}">Register</a>
-		</nav>
-        
-        <img src="moon.png" id="icon">
-        
-	{% endif %}
+        {% endif %}
 	</div>
-    <div class="dark">
         <div class="formwrapper">
             <h2 class="title">Login</h2>
             <form method="POST" action="/login">
@@ -59,19 +43,5 @@
                 </div>
                 {{ form.submit }}
             </form>
-            </div>
-        </div>
-    <script>
-        var icon = document.getElementById("icon");
-        icon.onclick = function(){
-            document.body.classList.toggle("dark-theme");
-            if(document.body.classList.contains("dark-theme")){
-                icon.src = "sun.png";
-            }else{
-                icon.src = "moon.png";
-            }
-        }
-            
-    </script>
-    </body>
+    </div>
 </html>

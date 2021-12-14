@@ -8,13 +8,15 @@ class Post(db.Model):
     text = db.Column("text", db.String(100))
     date = db.Column("date", db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    likes = db.Column("likes", db.Integer)
     comments = db.relationship("Comment", backref="note", cascade="all, delete-orphan", lazy=True)
 
-    def __init__(self, title, text, date, user_id):
+    def __init__(self, title, text, date, user_id, likes):
         self.title = title
         self.text = text
         self.date = date
         self.user_id = user_id
+        self.likes = likes
 
 
 class User(db.Model):
@@ -48,6 +50,14 @@ class Comment(db.Model):
         self.post_id = post_id
         self.user_id = user_id
 
+class Settings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    userID = db.Column("userID", db.Integer)
+    darkModeToggle = db.Column("darkModeToggle", db.Integer)
+
+    def __init__(self, userID, darkModeToggle):
+        self.userID = userID
+        self.darkModeToggle = darkModeToggle
 
 class Img(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -14,6 +14,7 @@ import datetime
 from forms import RegisterForm
 from forms import LoginForm
 from models import Comment as Comment
+from models import Settings as Settings
 from forms import CommentForm
 from werkzeug.utils import secure_filename
 
@@ -32,23 +33,22 @@ with app.app_context():
 @app.route('/index')
 def index():
     if session.get('user'):
-        return render_template("index.html", user=session['user'])
-    return render_template("index.html")
+        return render_template("index.html", user=session['user'], darkModeToggle=session['darkModeToggle'])
+    return render_template("index.html", darkModeToggle=0)
 
 
 @app.route('/posts')
 def get_posts():
     if session.get('user'):
         my_posts = db.session.query(Post).filter_by(user_id=session['user_id']).all()
-        return render_template('posts.html', posts=my_posts, user=session['user'])
-    else:
-        return redirect(url_for('login'))
+        return render_template('posts.html', posts=my_posts, user=session['user'], darkModeToggle=session['darkModeToggle'])
+
 
 
 @app.route('/allposts')
 def get_allposts():
     all_posts = db.session.query(Post).all()
-    return render_template('allposts.html', posts=all_posts, user=session['user'])
+    return render_template('allposts.html', posts=all_posts, user=session['user'], darkModeToggle=session['darkModeToggle'])
 
 
 @app.route('/posts/<post_id>', methods=['GET', 'POST'])
@@ -59,10 +59,24 @@ def get_post(post_id):
             my_post.likes += 1
             db.session.commit()
         form = CommentForm()
-        return render_template('post.html', post=my_post, user=session['user'], form=form)
+        return render_template('post.html', post=my_post, user=session['user'], form=form, darkModeToggle=session['darkModeToggle'])
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login'), settings=my_settings)
 
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    if session.get('user'):
+        my_settings = db.session.query(Settings).filter_by(userID=session['user_id']).one()
+        if request.method == 'POST':
+            if my_settings.darkModeToggle == 0:
+                my_settings.darkModeToggle = 1
+            else:
+                my_settings.darkModeToggle = 0
+            db.session.commit()
+            session['darkModeToggle'] = my_settings.darkModeToggle
+        return render_template('settings.html', darkModeToggle=session['darkModeToggle'], user=session['user'])
+    else:
+        return redirect(url_for('login'), settings=my_settings)
 
 @app.route('/posts/new', methods=['GET', 'POST'])
 def new_post():
@@ -79,9 +93,9 @@ def new_post():
             db.session.commit()
             return redirect(url_for('get_posts'))
         else:
-            return render_template('new.html', user=session['user'])
+            return render_template('new.html', user=session['user'], darkModeToggle=session['darkModeToggle'])
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('login'), settings=my_settings)
 
 
 @app.route('/posts/edit/<post_id>', methods=['GET', 'POST'])
@@ -98,9 +112,7 @@ def update_post(post_id):
             return redirect(url_for('get_posts'))
         else:
             my_post = db.session.query(Post).filter_by(id=post_id).one()
-            return render_template('new.html', post=my_post, user=session['user'])
-    else:
-        return redirect(url_for('login'))
+            return render_template('new.html', post=my_post, user=session['user'], darkModeToggle=session['darkModeToggle'])
 
 
 @app.route('/posts/delete/<post_id>', methods=['POST'])
@@ -110,8 +122,6 @@ def delete_post(post_id):
         db.session.delete(my_post)
         db.session.commit()
         return redirect(url_for('get_posts'))
-    else:
-        return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -127,6 +137,14 @@ def register():
         db.session.commit()
         session['user'] = first_name
         session['user_id'] = new_user.id
+
+        defaultDarkMode = 0
+        settingsID = new_user.id
+        new_settings = Settings(settingsID, defaultDarkMode)
+        db.session.add(new_settings)
+        db.session.commit()
+        my_settings = db.session.query(Settings).filter_by(userID=session['user_id']).one()
+        session['darkModeToggle']=my_settings.darkModeToggle
         return redirect(url_for('get_posts'))
     return render_template('register.html', form=form)
 
@@ -139,6 +157,8 @@ def login():
         if bcrypt.checkpw(request.form['password'].encode('utf-8'), the_user.password):
             session['user'] = the_user.first_name
             session['user_id'] = the_user.id
+            my_settings = db.session.query(Settings).filter_by(userID=session['user_id']).one()
+            session['darkModeToggle']=my_settings.darkModeToggle
             return redirect(url_for('get_posts'))
         login_form.password.errors = ["Incorrect username or password."]
         return render_template("login.html", form=login_form)
@@ -150,7 +170,6 @@ def login():
 def logout():
     if session.get('user'):
         session.clear()
-
     return redirect(url_for('index'))
 
 
@@ -164,9 +183,6 @@ def new_comment(post_id):
             db.session.add(new_record)
             db.session.commit()
         return redirect(url_for('get_post', post_id=post_id))
-    else:
-        return redirect(url_for('login'))
-
 
 
 @app.route('/upload', methods=['POST'])
@@ -191,6 +207,7 @@ def get_img(id):
     if not img:
         return 'Img Not Found!', 404
     return Response(img.img, mimetype=img.mimetype)
+
 
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)

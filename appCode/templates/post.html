@@ -5,36 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="StackUnderflow">
         <title>StackUnderflow - View Post</title>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
-        <link rel="stylesheet" type="text/css" href="DefaultStyle.css">
+        {% if darkModeToggle == 0 %}
+			<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}"> 
+        {% endif %}
+		{% if darkModeToggle == 1 %}
+			<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DarkMode.css') }}"> 
+		{% endif %}
        <script src="https://kit.fontawesome.com/a58e316714.js" crossorigin="anonymous"></script>
     </head>
 	
 	<div class="navbar">
         {% if user %}
-		<a href="{{ url_for('index') }}"> Home</a>
-		<a href="{{ url_for('get_posts') }}"> My Posts</a>
-		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
-		<a href="{{ url_for('new_post') }}"> Add Post</a>
-        {% else %}
-        <a href="{{ url_for('index') }}"> Home</a>
-		<a href="{{ url_for('get_posts') }}"> My Posts</a>
-		<a href="{{ url_for('new_post') }}"> Add Post</a>
-        {% endif %}
-	{% if user %}
-		<nav>
+			<a href="{{ url_for('index') }}"> Home</a>
+			<a href="{{ url_for('get_posts') }}"> My Posts</a>
+			<a href="{{ url_for('get_allposts') }}"> All Posts</a>
+			<a href="{{ url_for('new_post') }}"> Add Post</a>
+			<a href="{{ url_for('settings') }}"> Settings</a>
 			<a href="{{ url_for('logout') }}">Logout</a>
-		</nav>
-	{% else %}
-		<nav>
+        {% else %}
+			<a href="{{ url_for('index') }}"> Home</a>
 			<a href="{{ url_for('login') }}">Sign In</a>
 			<a href="{{ url_for('register') }}">Register</a>
-		</nav>
-
-        <img src="moon.png" id="icon">
-        
-        
-	{% endif %}
+        {% endif %}
 	</div>
 	
     <body>
