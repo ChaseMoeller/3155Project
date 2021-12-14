@@ -12,12 +12,16 @@
     </head>
 	
 	<div class="navbar">
+        {% if user %}
 		<a href="{{ url_for('index') }}"> Home</a>
 		<a href="{{ url_for('get_posts') }}"> My Posts</a>
-		<a href="{{ url_for('get_posts') }}"> All Posts</a>
+		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
 		<a href="{{ url_for('new_post') }}"> Add Post</a>
-        
-        
+        {% else %}
+        <a href="{{ url_for('index') }}"> Home</a>
+		<a href="{{ url_for('get_posts') }}"> My Posts</a>
+		<a href="{{ url_for('new_post') }}"> Add Post</a>
+        {% endif %}
         
         
 	{% if user %}
