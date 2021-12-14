@@ -6,8 +6,8 @@
         <meta name="description" content="StackUnderflow">
         <title>StackUnderflow - View Post</title>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
-        
         <link rel="stylesheet" type="text/css" href="DefaultStyle.css">
+       <script src="https://kit.fontawesome.com/a58e316714.js" crossorigin="anonymous"></script>
     </head>
 	
 	<div class="navbar">
@@ -30,7 +30,7 @@
 			<a href="{{ url_for('login') }}">Sign In</a>
 			<a href="{{ url_for('register') }}">Register</a>
 		</nav>
-        
+
         <img src="moon.png" id="icon">
         
         
@@ -49,14 +49,15 @@
                 <td>{{ post.title }}</td>
                 <td>{{ post.text }}</td>
                 <td>{{ post.date }}</td>
+
+                </style>
             </tr>
         </table>
 
-
-
         {% if post.comments %}
             {% if post.comments|length > 0 %}
-                <h2>Comments</h2>
+                <h2>Comments <button style="font-size:14px">Like <i class="fa fa-thumbs-up"></i></button>
+                </h2>
                 <ul>
                 {% for comment in post.comments %}
                     <li>{{ comment.content }}</li>
@@ -74,6 +75,7 @@
             </div>
            </div>
         </form>
+
         <script>
         var icon = document.getElementById("icon");
         icon.onclick = function(){
