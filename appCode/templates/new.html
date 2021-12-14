@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+
 		<title>New Post</title>
 		<meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content=""IE="edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='DefaultStyle.css') }}">
         
@@ -14,7 +16,6 @@
 		<a href="{{ url_for('get_posts') }}"> My Posts</a>
 		<a href="{{ url_for('get_allposts') }}"> All Posts</a>
 		<a href="{{ url_for('new_post') }}"> Add Post</a>
-        
         
 
 	{% if user %}
@@ -36,7 +37,7 @@
 <div class="dark">
 
 {% if post %}
-<form action="{{ url_for('update_post', post_id=post.id ) }}" method="post">
+<form method="POST" action="{{ url_for('update_post', post_id=post.id ) }}" enctype="multipart/form-data">
     {% else %}
     <form action="new" method="post">
         {% endif %}
@@ -55,14 +56,19 @@
             </textarea>
         </p>
 
-          <p><label>Upload a File</label></p>
-
-          <label for="img">Select image:</label>
-          <input type="file" id="img" name="img" accept="image/*">
+          <p><label align="center">Upload Image:</label></p>
 
         <p>
-
-            <input type="submit" value="Add Post"/>
+            <div class="input-group">
+                    <span class="input-group-btn">
+                    <span class="btn btn-primary btn-file">
+                        Browse… <input type="file" id="fileupload" name="file" multiple>
+                    </span>
+                    </span>
+<p class="text-center">
+                    <input id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Publish" />
+                </p>
+                </div>
 
         </p>
     </form>
