@@ -51,10 +51,13 @@ def get_allposts():
     return render_template('allposts.html', posts=all_posts, user=session['user'])
 
 
-@app.route('/posts/<post_id>')
+@app.route('/posts/<post_id>', methods=['GET', 'POST'])
 def get_post(post_id):
     if session.get('user'):
         my_post = db.session.query(Post).filter_by(id=post_id).one()
+        if request.method == 'POST':
+            my_post.likes += 1
+            db.session.commit()
         form = CommentForm()
         return render_template('post.html', post=my_post, user=session['user'], form=form)
     else:
@@ -70,7 +73,8 @@ def new_post():
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, session['user_id'])
+            starterLikes = 0
+            new_record = Post(title, text, today, session['user_id'], starterLikes)
             db.session.add(new_record)
             db.session.commit()
             return redirect(url_for('get_posts'))
@@ -162,6 +166,7 @@ def new_comment(post_id):
         return redirect(url_for('get_post', post_id=post_id))
     else:
         return redirect(url_for('login'))
+
 
 
 @app.route('/upload', methods=['POST'])

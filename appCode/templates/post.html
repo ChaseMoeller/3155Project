@@ -44,20 +44,26 @@
                 <th>Title</th>
                 <th>Text</th>
                 <th>Date</th>
+				<th>Likes</th>
             </tr>
             <tr>
                 <td>{{ post.title }}</td>
                 <td>{{ post.text }}</td>
                 <td>{{ post.date }}</td>
+				<td>{{ post.likes }}</td>
 
                 </style>
             </tr>
         </table>
-
+		<h2>
+			<form action ="" method="post">
+				<button name ="likebutton" value="Like">Like</button>
+			</form>
+		</h2>
+		
         {% if post.comments %}
             {% if post.comments|length > 0 %}
-                <h2>Comments <button style="font-size:14px">Like <i class="fa fa-thumbs-up"></i></button>
-                </h2>
+                <h2>Comments</h2>
                 <ul>
                 {% for comment in post.comments %}
                     <li>{{ comment.content }}</li>
